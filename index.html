@@ -62,7 +62,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.9rem 2rem;display:f
 .hstat:hover{background:rgba(0,200,150,.05)}
 .hstat-val{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;color:var(--gold);display:block;line-height:1}
 .hstat-label{font-size:.7rem;color:var(--muted);margin-top:.35rem;line-height:1.4}
-.scroll-hint{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:.4rem;animation:fadeIn 1s 1s both}
+/* SCROLL HINT - ahora es un botón funcional */
+.scroll-hint{
+  position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);
+  color:var(--muted);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  animation:fadeIn 1s 1s both;
+  background:none;border:none;cursor:pointer;
+  transition:color .2s;
+  padding:.5rem 1rem;
+}
+.scroll-hint:hover{color:var(--green)}
+.scroll-hint .arrow-down{
+  width:24px;height:24px;
+  border:1.5px solid currentColor;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  animation:bounce 2s 1.5s infinite;
+}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
@@ -255,7 +273,7 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
   </div>
   <div class="nav-dropdown" id="navDropdown">
     <button class="nav-cta" onclick="toggleDropdown()">
-      Explorar ↓
+      Explorar
       <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5l3 3 3-3" stroke="#06091a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <div class="dropdown-menu">
@@ -273,7 +291,7 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="inicio">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="badge"><span class="badge-dot"></span>Fintech · Bogotá · Colombia · 2026</div>
@@ -290,7 +308,13 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
     <div class="hstat"><span class="hstat-val">0</span><div class="hstat-label">Productos equivalentes</div></div>
     <div class="hstat"><span class="hstat-val">41,7%</span><div class="hstat-label">Carga financiera hogares</div></div>
   </div>
-  <div class="scroll-hint"><span>↓</span> Explorar</div>
+  <!-- BOTÓN EXPLORAR FUNCIONAL -->
+  <button class="scroll-hint" onclick="document.getElementById('problema').scrollIntoView({behavior:'smooth'})">
+    <div class="arrow-down">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <span>Explorar</span>
+  </button>
 </section>
 <div class="divider"></div>
 
@@ -616,6 +640,9 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
     <svg width="26" height="26" viewBox="0 0 36 36" fill="none"><path d="M18 2L4 10v8c0 8.3 5.9 16.1 14 18 8.1-1.9 14-9.7 14-18v-8L18 2z" fill="rgba(0,200,150,.12)" stroke="#00c896" stroke-width="1.5"/><path d="M12 18l4 4 8-8" stroke="#00c896" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--green);font-size:.9rem">RentHedge</span>
     <span style="color:var(--muted)">· Bogotá, Colombia · 2026</span>
+  </div>
+  <div style="color:var(--muted);font-size:.76rem">
+    <a href="welcome.html" style="color:var(--muted);text-decoration:none;opacity:.55;transition:opacity .2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">← Volver a la portada</a>
   </div>
   <div class="fr">Taller Individual · Fintech · Juan Felipe Barriga Beltrán · 22 de abril de 2026<br>Cifras basadas en datos del Banco de la República, SFC y fuentes públicas a 2026.</div>
 </footer>
