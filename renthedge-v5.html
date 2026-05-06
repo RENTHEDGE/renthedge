@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RentHedge — Protección Financiera para Inquilinos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#070b1c;--surface:#0d1530;--surface2:#121d3e;
+  --green:#00c896;--green2:#00e6ac;--gold:#f0c060;
+  --red:#ff5a5a;--text:#dce6f5;--muted:#7a90b8;
+  --border:rgba(0,200,150,.13);--glow:rgba(0,200,150,.22);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.65}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(7,11,28,.9);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none}
+.nav-brand{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;background:linear-gradient(120deg,var(--green),#7fffdf);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s}
+.nav-links a:hover{color:var(--green)}
+.nav-cta{background:var(--green);color:#06091a;border:none;padding:.48rem 1.1rem;border-radius:6px;font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s;text-decoration:none}
+.nav-cta:hover{background:var(--green2);box-shadow:0 0 24px var(--glow)}
+@media(max-width:640px){nav{padding:.8rem 1.2rem}.nav-links{display:none}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8rem 1.5rem 5rem;text-align:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 50% 65%,rgba(0,200,150,.06) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 15% 30%,rgba(74,144,226,.04) 0%,transparent 65%),radial-gradient(ellipse 40% 35% at 85% 75%,rgba(240,192,96,.03) 0%,transparent 60%)}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,200,150,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,150,.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%)}
+.badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,200,150,.08);border:1px solid rgba(0,200,150,.2);border-radius:20px;padding:.38rem 1rem;font-size:.75rem;color:var(--green);font-weight:500;letter-spacing:.04em;margin-bottom:1.8rem;animation:fadeUp .6s ease both}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.4)}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.6rem,8vw,5.2rem);font-weight:800;line-height:1.05;max-width:860px;letter-spacing:-.02em;animation:fadeUp .7s .08s ease both}
+.hero h1 em{font-style:normal;color:var(--muted)}
+.accent{background:linear-gradient(125deg,var(--green) 10%,#7fffdf 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{max-width:580px;font-size:1.05rem;color:var(--muted);margin:1.6rem auto 0;line-height:1.75;font-weight:300;animation:fadeUp .7s .18s ease both}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.9rem;justify-content:center;margin-top:2.6rem;animation:fadeUp .7s .28s ease both}
+.btn-p{background:var(--green);color:#06091a;border:none;padding:.78rem 1.8rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .2s;text-decoration:none}
+.btn-p:hover{background:var(--green2);transform:translateY(-2px);box-shadow:0 8px 32px var(--glow)}
+.btn-g{background:transparent;color:var(--text);border:1px solid rgba(220,230,245,.15);padding:.78rem 1.8rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:600;font-size:.92rem;cursor:pointer;transition:all .2s;text-decoration:none}
+.btn-g:hover{border-color:var(--green);color:var(--green)}
+.hero-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:0;margin-top:3.5rem;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:rgba(13,21,48,.6);backdrop-filter:blur(10px);animation:fadeUp .7s .36s ease both}
+.hstat{padding:1.2rem 1.5rem;text-align:center;border-right:1px solid var(--border);transition:background .2s;min-width:120px}
+.hstat:last-child{border-right:none}
+.hstat:hover{background:rgba(0,200,150,.05)}
+.hstat-val{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;color:var(--gold);display:block;line-height:1}
+.hstat-label{font-size:.7rem;color:var(--muted);margin-top:.35rem;line-height:1.4}
+.scroll-hint{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:.4rem;animation:fadeIn 1s 1s both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* SHARED */
+section{padding:5.5rem 1.5rem;position:relative}
+.container{max-width:1080px;margin:0 auto}
+.eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:.75rem}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,5vw,2.9rem);font-weight:800;line-height:1.18;margin-bottom:1.1rem;letter-spacing:-.01em}
+.sec-body{color:var(--muted);max-width:580px;font-size:.98rem;line-height:1.72}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:transform .25s,border-color .25s}
+.card:hover{transform:translateY(-4px)}
+.pill{display:inline-block;background:rgba(0,200,150,.09);border:1px solid rgba(0,200,150,.2);color:var(--green);font-size:.71rem;padding:.22rem .65rem;border-radius:20px;font-weight:500;margin-top:.5rem}
+.pill.gold{background:rgba(240,192,96,.09);border-color:rgba(240,192,96,.2);color:var(--gold)}
+.pill.red{background:rgba(255,90,90,.09);border-color:rgba(255,90,90,.2);color:var(--red)}
+
+/* PROBLEMA */
+.ncard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.6rem;position:relative;overflow:hidden;transition:transform .25s,border-color .25s}
+.ncard:hover{transform:translateY(-4px);border-color:rgba(255,90,90,.25)}
+.ncard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),#ff8c5a)}
+.ncard.gold-card::before{background:linear-gradient(90deg,var(--gold),#f0a060)}
+.ncard-stat{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--red);margin-bottom:.5rem}
+.ncard-stat.gold{color:var(--gold)}
+.ncard h3{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:.4rem}
+.ncard p{font-size:.84rem;color:var(--muted);line-height:1.6}
+.ng{display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;margin-top:2.5rem}
+@media(max-width:640px){.ng{grid-template-columns:1fr}}
+.insight{margin-top:2rem;background:linear-gradient(135deg,rgba(0,200,150,.07),rgba(0,200,150,.03));border:1px solid rgba(0,200,150,.2);border-radius:14px;padding:1.8rem 2rem;border-left:4px solid var(--green)}
+.insight p{font-size:1.02rem;line-height:1.75;max-width:720px}
+.insight strong{color:var(--text)}
+.story{margin-top:2rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center}
+@media(max-width:640px){.story{grid-template-columns:1fr}}
+.story-q{font-style:italic;font-size:1rem;line-height:1.8;color:var(--muted);border-left:3px solid var(--green);padding-left:1.2rem}
+.story-q strong{color:var(--text);font-style:normal}
+.story-r h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:.8rem;color:var(--green)}
+.story-r p{font-size:.87rem;color:var(--muted);line-height:1.7}
+
+/* HOW IT WORKS */
+.tl{display:flex;overflow-x:auto;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:2rem}
+.tl::-webkit-scrollbar{display:none}
+.tlc{flex:1;min-width:110px;padding:1rem .8rem;text-align:center;border-right:1px solid var(--border);background:var(--surface);transition:background .2s}
+.tlc:last-child{border-right:none}
+.tlc:hover,.tlc.on{background:rgba(0,200,150,.07)}
+.tlp{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.tle{font-size:.75rem;font-weight:600;margin-top:.3rem;color:var(--text);line-height:1.3}
+.tld{width:7px;height:7px;border-radius:50%;margin:.5rem auto 0}
+.tld.g{background:var(--green)}.tld.go{background:var(--gold)}.tld.r{background:var(--red)}
+.steps{display:flex;flex-direction:column;gap:0;margin-top:2.5rem;position:relative}
+.steps::before{content:'';position:absolute;left:27px;top:52px;bottom:52px;width:2px;background:linear-gradient(to bottom,var(--green),rgba(0,200,150,.05))}
+.step{display:flex;gap:1.4rem;align-items:flex-start;padding:1.3rem 0;opacity:0;transform:translateX(-16px);transition:all .45s}
+.step.vis{opacity:1;transform:translateX(0)}
+.snum{min-width:54px;height:54px;border-radius:50%;background:var(--surface2);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:var(--green);font-size:1rem;flex-shrink:0;position:relative;z-index:1}
+.sbody h3{font-family:'Syne',sans-serif;font-weight:700;font-size:.98rem;margin-bottom:.3rem}
+.sbody p{font-size:.86rem;color:var(--muted);line-height:1.65}
+
+/* FINANCIAL */
+.metrics-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-top:2.5rem}
+.met{background:var(--surface);padding:1.4rem 1rem;text-align:center;transition:background .2s}
+.met:hover{background:var(--surface2)}
+.met-val{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;color:var(--gold);display:block}
+.met-label{font-size:.73rem;color:var(--muted);margin-top:.25rem;line-height:1.4}
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;margin-top:2rem}
+@media(max-width:680px){.charts-grid{grid-template-columns:1fr}}
+.cchart{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.4rem}
+.cchart h3{font-size:.76rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
+.cw{position:relative;height:210px}
+.cnote{margin-top:1.5rem;background:var(--surface);border:1px solid rgba(240,192,96,.2);border-radius:12px;padding:1.4rem;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start}
+.cnote-icon{font-size:1.3rem;margin-top:.1rem}
+.cnote-label{font-size:.7rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:.4rem}
+.cnote-text{font-size:.83rem;color:var(--muted);line-height:1.65}
+.cnote-text strong{color:var(--text)}
+
+/* COMPARE */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:14px;background:var(--surface);margin-top:2rem}
+.ctable{width:100%;border-collapse:collapse;font-size:.85rem;min-width:580px}
+.ctable thead tr{background:rgba(0,200,150,.05)}
+.ctable th{font-family:'Syne',sans-serif;font-size:.73rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:.9rem 1rem;border-bottom:1px solid var(--border);text-align:left;color:var(--muted)}
+.ctable th.g{color:var(--green)}
+.ctable td{padding:.82rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:var(--muted);line-height:1.45}
+.ctable tr:last-child td{border-bottom:none}
+.ctable tr:hover td{background:rgba(0,200,150,.025)}
+.fc{color:var(--text);font-weight:500}
+.gc{color:var(--green)!important;font-weight:500}
+.yes{color:var(--green)}.no{color:var(--red)}
+
+/* MARKET */
+.market-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.1rem;margin-top:2.5rem}
+.mcard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .25s}
+.mcard:hover{border-color:rgba(0,200,150,.35);transform:translateY(-4px)}
+.mcard-val{font-family:'Syne',sans-serif;font-size:2.1rem;font-weight:800;color:var(--green);display:block;line-height:1.1;margin-bottom:.4rem}
+.mcard-label{font-size:.83rem;color:var(--muted);line-height:1.55}
+.mcard-source{font-size:.68rem;color:rgba(122,144,184,.38);margin-top:.6rem}
+
+/* REGULATORY */
+.reg-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2rem}
+@media(max-width:580px){.reg-grid{grid-template-columns:1fr}}
+.reg-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem}
+.reg-card.f1{border-top:3px solid var(--green)}.reg-card.f2{border-top:3px solid var(--gold)}
+.rct{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:1rem}
+.ri-item{display:flex;gap:.55rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.82rem;color:var(--muted);align-items:flex-start}
+.ri-item:last-child{border-bottom:none}
+.ri{color:var(--green);flex-shrink:0;margin-top:.15rem;font-size:.75rem}
+.aml{margin-top:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.4rem}
+.aml-title{font-size:.7rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.15em;margin-bottom:.9rem}
+.aml-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.7rem}
+.aml-item{font-size:.82rem;color:var(--muted);display:flex;gap:.5rem;align-items:flex-start}
+
+/* RISK */
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:2rem}
+.rcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.3rem;transition:border-color .2s}
+.rcard:hover{border-color:rgba(122,144,184,.3)}
+.rl{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:.2rem .55rem;border-radius:4px;display:inline-block;margin-bottom:.7rem}
+.rl-high{background:rgba(255,90,90,.12);color:var(--red)}.rl-med{background:rgba(240,192,96,.12);color:var(--gold)}.rl-low{background:rgba(0,200,150,.1);color:var(--green)}
+.rcard h4{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:.35rem}
+.rcard p{font-size:.81rem;color:var(--muted);line-height:1.55}
+
+/* TEAM */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-top:2.5rem}
+.tcard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.7rem 1.4rem;text-align:center;transition:all .25s;position:relative;overflow:hidden}
+.tcard:hover{border-color:rgba(0,200,150,.3);transform:translateY(-4px)}
+.tcard::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(0,200,150,.05) 0%,transparent 70%);pointer-events:none}
+.tavatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--surface2),var(--surface));border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--green)}
+.tname{font-family:'Syne',sans-serif;font-weight:700;font-size:.93rem;margin-bottom:.22rem}
+.trole{font-size:.77rem;color:var(--green);font-weight:500;margin-bottom:.6rem}
+.tli{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;color:var(--muted);text-decoration:none;background:rgba(122,144,184,.08);padding:.25rem .7rem;border-radius:20px;border:1px solid rgba(122,144,184,.15);transition:all .2s}
+.tli:hover{color:var(--green);border-color:rgba(0,200,150,.3)}
+
+/* CTA */
+.cta{text-align:center;background:radial-gradient(ellipse 90% 70% at 50% 50%,rgba(0,200,150,.055) 0%,transparent 70%),var(--bg);border-top:1px solid var(--border);padding:7rem 1.5rem 6rem}
+.cta h2{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:800;margin-bottom:1rem;letter-spacing:-.02em}
+.cta p{color:var(--muted);max-width:480px;margin:0 auto 2.5rem;font-size:1rem;line-height:1.7}
+.cta-cards{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:3rem}
+.cc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.3rem 1.5rem;text-align:left;max-width:240px;flex:1 1 200px;transition:all .2s}
+.cc:hover{border-color:rgba(0,200,150,.35);transform:translateY(-3px)}
+.cc-icon{font-size:1.4rem;margin-bottom:.55rem}
+.cc h4{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;margin-bottom:.3rem}
+.cc p{font-size:.78rem;color:var(--muted);line-height:1.5}
+
+/* FOOTER */
+footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;font-size:.77rem;color:var(--muted)}
+.fl{display:flex;align-items:center;gap:.6rem}
+.fr{font-size:.7rem;color:rgba(122,144,184,.35);text-align:right;max-width:400px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <!-- Reemplaza este SVG con tu logo una vez lo tengas -->
+    <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+      <path d="M18 2L4 10v8c0 8.3 5.9 16.1 14 18 8.1-1.9 14-9.7 14-18v-8L18 2z" fill="rgba(0,200,150,.12)" stroke="#00c896" stroke-width="1.5"/>
+      <path d="M12 18l4 4 8-8" stroke="#00c896" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="nav-brand">RentHedge</span>
+  </a>
+  <div class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="modelo.html">Modelo Financiero</a>
+      <a href="mercado.html">Mercado</a>
+      <a href="regulacion.html">Regulación</a>
+      <a href="fuentes.html">Fuentes</a>
+    </div>
+    <a href="modelo.html" class="nav-cta">Ver Modelo →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="badge"><span class="badge-dot"></span>Fintech · Bogotá · Colombia · 2026</div>
+  <h1><em>El inquilino también</em><br>merece una <span class="accent">red de protección</span></h1>
+  <p class="hero-sub">RentHedge cubre hasta el 80% de tu arriendo en menos de 72 horas cuando no puedes pagarlo (50% en la segunda activación del año), protege tu historial en DataCrédito (previa firma del convenio con TransUnion), y opera sobre Bre-B — el sistema de pagos inmediatos del Banco de la República.</p>
+  <div class="hero-actions">
+    <a href="#modelo" class="btn-p">Ver el modelo financiero →</a>
+    <a href="#problema" class="btn-g">¿Por qué RentHedge?</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hstat-val">$60K</span><div class="hstat-label">Prima mensual (COP)</div></div>
+    <div class="hstat"><span class="hstat-val">&lt;72h</span><div class="hstat-label">Pago al propietario</div></div>
+    <div class="hstat"><span class="hstat-val">4M</span><div class="hstat-label">Hogares arrendatarios</div></div>
+    <div class="hstat"><span class="hstat-val">0</span><div class="hstat-label">Productos equivalentes</div></div>
+    <div class="hstat"><span class="hstat-val">41,7%</span><div class="hstat-label">Carga financiera hogares</div></div>
+  </div>
+  <div class="scroll-hint"><span>↓</span> Explorar</div>
+</section>
+<div class="divider"></div>
+
+<!-- PROBLEMA -->
+<section id="problema">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">El problema</div>
+      <h2 class="sec-title" style="font-size:clamp(1.9rem,5vw,3.2rem)"><span style="color:var(--red);font-size:clamp(2.5rem,6vw,4rem);display:block;line-height:1;margin-bottom:.3rem">41,7%</span>de los hogares colombianos destinan casi la mitad de su ingreso a deudas.<br>Un solo mes de impago puede destruirlo todo.</h2>
+    </div>
+    <div class="ng">
+      <div class="ncard reveal d1">
+        <div class="ncard-stat">Día 1</div>
+        <h3>Reporte negativo a DataCrédito</h3>
+        <p>El propietario puede reportar inmediatamente, cerrando el acceso a crédito, nuevos arriendos y hasta empleos en Colombia.</p>
+      </div>
+      <div class="ncard reveal d2">
+        <div class="ncard-stat">6–24 meses</div>
+        <h3>Proceso de desalojo — Ley 820/2003</h3>
+        <p>Aunque el proceso demora meses o años, el estrés jurídico y la incertidumbre habitacional comienzan el primer día de mora.</p>
+      </div>
+      <div class="ncard reveal d3">
+        <div class="ncard-stat">+Intereses</div>
+        <h3>Deuda que se acumula sin freno</h3>
+        <p>La deuda pendiente crece con intereses mientras el inquilino intenta recuperarse, creando un ciclo financiero difícil de romper. En 2026 los arriendos pueden aumentar hasta 5,1% (tope legal = IPC 2025 según DANE / Ley 820/2003).</p>
+      </div>
+      <div class="ncard gold-card reveal d4">
+        <div class="ncard-stat gold">2M+</div>
+        <h3>Personas en microcredito activo</h3>
+        <p>El mercado de bajo valor funciona en Colombia — la cartera microcrediticia supera los $2,2 billones COP. RentHedge es viable.</p>
+      </div>
+    </div>
+    <div class="insight reveal">
+      <div class="eyebrow" style="margin-bottom:.5rem">Insight central</div>
+      <p>Ninguno de estos daños es causado por un inquilino irresponsable crónico. <strong>Puede ocurrirle a cualquier persona ante un choque temporal de ingreso.</strong> El sistema lo castiga como si fuera un fracaso permanente. RentHedge rompe esa cadena por $60.000 al mes.</p>
+    </div>
+    <div class="story reveal">
+      <div class="story-q">"Perdí un proyecto freelance en febrero. Tenía el arriendo, los servicios y la cuota del carro. <strong>Escogí los servicios y el carro — porque ambos reportaban inmediatamente.</strong> El arriendo lo dejé para después. Ese 'después' me costó dos años de historial crediticio."<br><br><span style="font-size:.75rem;color:rgba(122,144,184,.55);font-style:normal">— Perfil típico de usuario RentHedge, Bogotá 2026</span></div>
+      <div class="story-r">
+        <h3>Con RentHedge, esa historia termina diferente.</h3>
+        <p>El inquilino activa la cobertura. En menos de 72 horas, el propietario recibe el 80% vía Bre-B. El historial en DataCrédito permanece limpio. El inquilino tiene 30 días para recuperarse sin intereses. Nadie pierde.</p>
+        <div style="margin-top:1rem"><span class="pill">Prima previa: $60.000/mes</span> <span class="pill gold">Cobertura activa desde mes 7</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- CÓMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">La solución</div>
+      <h2 class="sec-title">Cómo funciona RentHedge</h2>
+      <p class="sec-body">Tres capas: lo que el cliente siente, la infraestructura que lo hace posible, y la matemática que lo hace sostenible.</p>
+    </div>
+    <div class="tl reveal">
+      <div class="tlc on"><div class="tlp">Mes 1</div><div class="tle">Onboarding y prima</div><div class="tld g"></div></div>
+      <div class="tlc on"><div class="tlp">Meses 1–6</div><div class="tle">Carencia + historial DC</div><div class="tld g"></div></div>
+      <div class="tlc on"><div class="tlp">Mes 7+</div><div class="tle">Cobertura activa</div><div class="tld go"></div></div>
+      <div class="tlc"><div class="tlp">Evento</div><div class="tle">80% (1.ª) / 50% (2.ª) &lt;72h</div><div class="tld go"></div></div>
+      <div class="tlc"><div class="tlp">Día 0–30</div><div class="tle">Repago sin intereses</div><div class="tld g"></div></div>
+      <div class="tlc"><div class="tlp">Día 91+</div><div class="tle">Reporte si no repaga</div><div class="tld r"></div></div>
+    </div>
+    <div class="steps" id="stepsEl">
+      <div class="step"><div class="snum">01</div><div class="sbody"><h3>Prima mensual de $60.000 — 4% del arriendo</h3><p>Con el arriendo promedio de Bogotá en $1.500.000 (DANE / Lonjas de Propiedad Raíz, 2025), son $60.000 al mes — menos que un plan de datos premium. Sin letra chica.</p><span class="pill">4% del arriendo mensual · Arriendo prom. Bogotá: DANE / Lonjas 2025</span></div></div>
+      <div class="step"><div class="snum">02</div><div class="sbody"><h3>Historial crediticio positivo en DataCrédito</h3><p>Una vez firmado el convenio con TransUnion/DataCrédito — prioridad absoluta antes del lanzamiento — RentHedge reporta comportamiento positivo desde el primer pago, construyendo crédito para personas invisibles al sistema bancario. Este es el diferenciador más poderoso del producto.</p><span class="pill">Previa autorización SFC como operador de información</span></div></div>
+      <div class="step"><div class="snum">03</div><div class="sbody"><h3>6 meses de carencia: las reservas trabajan mientras la cobertura madura</h3><p>Durante la carencia, las primas acumuladas se invierten en un portafolio diversificado conforme al régimen de inversiones admisibles para reservas técnicas (Decreto 2953/2010, SFC). El portafolio combina tres instrumentos: <strong>TES Clase B</strong> (60% del fondo, rendimiento ~13,1% EA a 10 años según BVC abril 2026), <strong>bonos de deuda corporativa investment-grade</strong> en la Bolsa de Valores de Colombia (30%, rendimiento ~11–12% EA), y <strong>fondos de inversión colectiva de renta fija</strong> (10%, liquidez inmediata). El fondo de $72.000.000 acumulado al mes 6 genera aproximadamente $8,5–9,4M anuales en rendimientos — equivalente a $700.000–$780.000 mensuales adicionales desde el mes 7.</p><span class="pill gold">TES 13,1% · Renta fija corp. 11–12% · Fuente: BVC / Bancolombia, abr. 2026</span><span class="pill" style="margin-left:.4rem">Régimen: Decreto 2953/2010 · SFC</span></div></div>
+      <div class="step"><div class="snum">04</div><div class="sbody"><h3>Verificación del evento y pago inmediato vía Bre-B</h3><p>El evento se verifica automáticamente cruzando fuentes objetivas: reporte PILA (ausencia de cotización = pérdida de empleo), certificado de incapacidad médica o notificación de cierre empresarial. Sin reclamo subjetivo del usuario — el sistema consulta la fuente y activa el pago en menos de 20 segundos vía Bre-B: <strong>80% del arriendo en la primera activación del año, 50% en la segunda</strong>. 24/7/365, irrevocable, costo cero en DICE durante los primeros años.</p><span class="pill">Bre-B · Liquidación en tiempo real</span> <span class="pill gold">Irrevocable · 24/7/365</span></div></div>
+      <div class="step"><div class="snum">05</div><div class="sbody"><h3>30 días sin intereses para recuperarse</h3><p>El inquilino repaga sin intereses en 30 días. Hasta el día 90 con interés máximo legal. Si al día 91 no ha repagado: reporte a DataCrédito y cancelación de póliza. Máximo 2 activaciones por año — la segunda con cobertura del 50%, desincentivando el uso recurrente sin penalizar el caso legítimo.</p><span class="pill">Máx. 2 activaciones / año</span></div></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- MODELO FINANCIERO -->
+<section id="modelo">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">Modelo financiero</div>
+      <h2 class="sec-title">La matemática que lo hace sostenible</h2>
+      <p class="sec-body">Punto de quiebre en 200 clientes activos. Con cobertura escalonada (80% primera activación / 50% segunda), tasa de activación del 7% y recuperación estimada del 85% de los desembolsos, la pérdida neta mensual es de ~$2,1M — menor que en el modelo de cobertura fija. Autosostenible sin deuda externa ni captación de depósitos del público.</p>
+    </div>
+    <div class="metrics-row reveal">
+      <div class="met"><span class="met-val">200</span><div class="met-label">Clientes para punto de quiebre</div></div>
+      <div class="met"><span class="met-val">$12M</span><div class="met-label">Ingresos mensuales en equilibrio (COP)</div></div>
+      <div class="met"><span class="met-val">7%</span><div class="met-label">Tasa de activación conservadora<br><small style="font-size:.65rem;color:var(--muted);font-weight:400">DANE: desempleo enero 2026 = 10,9%; marzo 2026 = 8,8% · Máx. 2 activaciones/año por cliente</small></div></div>
+      <div class="met"><span class="met-val">$80–100M</span><div class="met-label">Capital mínimo recomendado (COP)</div></div>
+      <div class="met"><span class="met-val">12–14%</span><div class="met-label">Rendimiento esperado del portafolio de reservas<br><small style="font-size:.65rem;color:var(--muted);font-weight:400">TES 10 años: 13,1% · Renta fija local: 12,5% EA · Fuente: Bancolombia / BVC, 2026</small></div></div>
+    </div>
+    <div class="charts-grid">
+      <div class="cchart reveal"><h3>Flujo de caja mensual — 200 clientes (COP)</h3><div class="cw"><canvas id="c1"></canvas></div></div>
+      <div class="cchart reveal d1"><h3>Distribución del capital inicial</h3><div class="cw"><canvas id="c2"></canvas></div></div>
+      <div class="cchart reveal d2"><h3>Acumulación del fondo de reservas — carencia (6 meses)</h3><div class="cw"><canvas id="c3"></canvas></div></div>
+      <div class="cchart reveal d3"><h3>Escenarios de activación mensual</h3><div class="cw"><canvas id="c4"></canvas></div></div>
+    </div>
+    <div class="cnote reveal">
+      <div class="cnote-icon"></div>
+      <div>
+        <div class="cnote-label">Principio rector de capital</div>
+        <p class="cnote-text">No captar recursos del público. No tomar deuda externa. Capital 100% de fundadores o inversionistas privados. <strong>Los rendimientos del portafolio de reservas (TES, bonos corporativos, fondos de renta fija) están sujetos a retención en la fuente del 7% sobre intereses (ET Art. 395) e impuesto de renta del 35% para personas jurídicas (Ley 2277/2022). Las ganancias en renta variable están sujetas a impuesto de ganancias ocasionales. Rentabilidad siempre presentada neta de impuestos.</strong> El GMF del 4×1000 aplica sobre cada transacción y está incorporado al modelo de costos (Estatuto Tributario, Art. 870–879; vigente 2026).</p>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- COMPARATIVO -->
+<section id="comparativo">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">Ventaja competitiva</div>
+      <h2 class="sec-title">RentHedge vs. el mercado</h2>
+      <p class="sec-body">Los seguros tradicionales protegen al propietario. Las fintech de crédito crean deuda. Las proptech intermedian transacciones. RentHedge es el único producto que protege al inquilino.</p>
+    </div>
+    <div class="tbl-wrap reveal">
+      <table class="ctable">
+        <thead>
+          <tr>
+            <th>Dimensión</th>
+            <th class="g">RentHedge </th>
+            <th>Bolívar / Sura</th>
+            <th>Addi / Lineru</th>
+            <th>La Haus / Habi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="fc">¿Quién es el beneficiario?</td><td class="gc"><span class="yes"></span> El inquilino</td><td>El propietario</td><td>El inquilino (vía deuda)</td><td>Propietario / comprador</td></tr>
+          <tr><td class="fc">¿Crea deuda en el balance?</td><td class="gc"><span class="yes"></span> No</td><td>No (para el inquilino)</td><td><span class="no"></span> Sí, con intereses desde día 1</td><td>N/A</td></tr>
+          <tr><td class="fc">Construye historial crediticio</td><td class="gc"><span class="yes"></span> Desde el mes 1</td><td>No</td><td>Solo si paga a tiempo</td><td>No</td></tr>
+          <tr><td class="fc">Pago al propietario &lt;72 hrs</td><td class="gc"><span class="yes"></span> Vía Bre-B, irrevocable</td><td>Proceso judicial contra inquilino</td><td>N/A</td><td>N/A</td></tr>
+          <tr><td class="fc">Costo al inquilino</td><td class="gc"><span class="yes"></span> $60.000/mes (prima)</td><td>Requisito de entrada (traslado)</td><td>Interés + riesgo de reporte</td><td>Comisión de transacción</td></tr>
+          <tr><td class="fc">Relación con proptech</td><td class="gc"><span class="yes"></span> Aliados de distribución</td><td>Paralelo</td><td>Competidor indirecto</td><td>→ Canal de distribución</td></tr>
+          <tr><td class="fc">Modelo de ingresos</td><td class="gc">Prima mensual recurrente</td><td>Prima por contrato del propietario</td><td>Interés sobre crédito</td><td>Comisión por transacción</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- MERCADO -->
+<section id="mercado">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">Oportunidad de mercado</div>
+      <h2 class="sec-title">Un mercado masivo sin producto equivalente</h2>
+      <p class="sec-body">Colombia tiene la infraestructura digital, la regulación habilitante y la demanda urgente. El momento es 2026.</p>
+    </div>
+    <div class="market-grid">
+      <div class="mcard reveal"><span class="mcard-val">4M</span><div class="mcard-label">Hogares arrendatarios en Colombia sin ningún producto de protección orientado al inquilino</div><div class="mcard-source">DANE — Encuesta Nacional de Calidad de Vida (ECV) 2023; actualizaciones 2025</div></div>
+      <div class="mcard reveal d1"><span class="mcard-val">409</span><div class="mcard-label">Empresas fintech activas en Colombia en 2026, confirmando madurez del ecosistema digital</div><div class="mcard-source">Informe Colombia Fintech 2025</div></div>
+      <div class="mcard reveal d2"><span class="mcard-val">201,6%</span><div class="mcard-label">Crecimiento en número de operaciones de pagos inmediatos en Colombia durante 2024</div><div class="mcard-source">Reporte Infraestructura Financiera 2025, BanRep</div></div>
+      <div class="mcard reveal d3"><span class="mcard-val">&gt;80%</span><div class="mcard-label">De las operaciones financieras colombianas ya ocurren en canales digitales</div><div class="mcard-source">Banco de la República — Reporte de Infraestructura Financiera e Instrumentos de Pago 2025</div></div>
+      <div class="mcard reveal d4"><span class="mcard-val">$2,2B</span><div class="mcard-label">Cartera microcrediticia vigente en Colombia — el modelo de bajo valor es sostenible</div><div class="mcard-source">Encuesta Situación del Crédito, BanRep dic. 2025</div></div>
+      <div class="mcard reveal"><span class="mcard-val">41,7%</span><div class="mcard-label">Carga financiera de hogares colombianos — el product-market fit es urgente e inmediato</div><div class="mcard-source">Encuesta Situación del Crédito, BanRep dic. 2025</div></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- REGULACIÓN -->
+<section id="regulacion">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">Marco regulatorio</div>
+      <h2 class="sec-title">Certeza jurídica desde el día 1</h2>
+      <p class="sec-body">Colombia tiene el marco habilitante mínimo para operar en fase 1. La ruta del sandbox de la SFC es la más eficiente para validar el modelo sin requisitos de capital plenos.</p>
+    </div>
+    <div class="reg-grid">
+      <div class="reg-card f1 reveal">
+        <div class="rct"> Fase 1 — Sandbox SFC</div>
+        <div class="ri-item"><span class="ri">→</span><span>Decreto 1234/2020 + Circular 016/2021 · Certificado de operación temporal</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>SAS con objeto financiero especial · Sin licencia plena de entrada</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Ley 1266/2008 + Ley 1581/2012 · Habeas data y protección de datos</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Ley 1328/2009 · Protección al consumidor financiero</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Bre-B vía participante indirecto (Nequi / Daviplata) · Evita trámite Res. 6/2023</span></div>
+        <div class="ri-item"><span class="ri" style="color:var(--gold)">★</span><span style="color:var(--text);font-weight:500">Convenio DataCrédito: prioridad absoluta antes del lanzamiento</span></div>
+      </div>
+      <div class="reg-card f2 reveal d1">
+        <div class="rct"> Fase 2 — Post-sandbox</div>
+        <div class="ri-item"><span class="ri">→</span><span>Licencia plena ante la SFC como aseguradora o figura análoga</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Tokenización de pólizas como NFTs con derechos paramétricos</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Smart contracts una vez SFC y BanRep desarrollen el marco para activos digitales</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Decreto 1357/2018 · Posible fondeo por financiación colaborativa</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Expansión a Medellín, Cali y Barranquilla</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Operador SPBVI directo ante el Banco de la República</span></div>
+      </div>
+    </div>
+    <div class="aml reveal">
+      <div class="aml-title">Controles AML / SARLAFT desde el lanzamiento</div>
+      <div class="aml-grid">
+        <div class="aml-item"><span></span><span>Validación biométrica en onboarding — Ley 1581/2012</span></div>
+        <div class="aml-item"><span></span><span>Cruce contra listas OFAC, ONU y nacionales</span></div>
+        <div class="aml-item"><span></span><span>Monitoreo de patrones anómalos de activación</span></div>
+        <div class="aml-item"><span></span><span>Reportes de operaciones sospechosas a la UIAF — Ley 526/1999</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- RIESGOS -->
+<section id="riesgos">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">Gestión de riesgos</div>
+      <h2 class="sec-title">Riesgos identificados y mitigados</h2>
+      <p class="sec-body">Transparencia total sobre las variables que pueden comprometer el modelo, y la estrategia de respuesta para cada una.</p>
+    </div>
+    <div class="risk-grid">
+      <div class="rcard reveal"><div class="rl rl-high">Crítico</div><h4>Convenio DataCrédito</h4><p>Sin este convenio el producto pierde su diferenciador más poderoso. Es la prioridad absoluta antes del lanzamiento del piloto.</p></div>
+      <div class="rcard reveal d1"><div class="rl rl-high">Alto</div><h4>Tasa de activación &gt;7%</h4><p>El deterioro macro puede elevar el desempleo y presionar la activación. La cobertura escalonada (80%/50%) reduce la exposición máxima en ~15% respecto a cobertura fija. Comité de riesgos trimestral revisa parámetros y ajusta el modelo.</p></div>
+      <div class="rcard reveal d2"><div class="rl rl-med">Medio</div><h4>GMF del 4×1000</h4><p>$240 por prima de $60K y $4.800 por siniestro de $1.2M. Incorporado explícitamente al modelo de costos desde el inicio.</p></div>
+      <div class="rcard reveal d3"><div class="rl rl-med">Medio</div><h4>Incertidumbre regulatoria</div><p>Decretos en curso en 2026 pueden modificar condiciones del sandbox o reglas de DataCrédito durante el piloto.</p></div>
+      <div class="rcard reveal d4"><div class="rl rl-med">Medio</div><h4>Riesgo cibernético (Bre-B)</h4><p>Masificación de Bre-B amplía superficie de ataque. Un incidente en pago crítico puede destruir confianza en etapa frágil.</p></div>
+      <div class="rcard reveal"><div class="rl rl-low">Bajo</div><h4>Riesgo de corrida</h4><p>Las primas son irrevocables para el asegurador. No hay riesgo de corrida bancaria como en depósitos. El fondo de reserva es estable.</p></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- EQUIPO -->
+<section id="equipo">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">Equipo fundador</div>
+      <h2 class="sec-title">Las personas detrás de RentHedge</h2>
+      <p class="sec-body">Estudiantes de Finanzas y Economía de la Universidad del Rosario, Bogotá. Combinamos conocimiento en finanzas cuantitativas, regulación y tecnología financiera.</p>
+    </div>
+    <div class="team-grid">
+      <div class="tcard reveal">
+        <div class="tavatar">JF</div>
+        <div class="tname">Juan Felipe Barriga Beltrán</div>
+        <div class="trole">CEO & Co-Founder</div>
+        <a href="https://linkedin.com" target="_blank" class="tli">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+      <div class="tcard reveal d1">
+        <div class="tavatar">JD</div>
+        <div class="tname">Jesús David Quevedo Baquero</div>
+        <div class="trole">CTO & Co-Founder</div>
+        <a href="https://linkedin.com" target="_blank" class="tli">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+      <div class="tcard reveal d2">
+        <div class="tavatar">AS</div>
+        <div class="tname">Ana Sofía Rojas Valderrama</div>
+        <div class="trole">CFO & Co-Founder</div>
+        <a href="https://linkedin.com" target="_blank" class="tli">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+      <div class="tcard reveal d3">
+        <div class="tavatar">NR</div>
+        <div class="tname">Nicolás Ruiz Villabona</div>
+        <div class="trole">COO & Co-Founder</div>
+        <a href="https://linkedin.com" target="_blank" class="tli">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="cta" id="contacto">
+  <div class="reveal">
+    <div class="eyebrow" style="text-align:center">Próximos pasos</div>
+    <h2>¿Listo para proteger<br>a 4 millones de inquilinos?</h2>
+    <p>RentHedge tiene el producto, la infraestructura y la matemática. El sandbox de la SFC es la puerta de entrada. El convenio con DataCrédito es la prioridad.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:.9rem;justify-content:center">
+      <a href="https://linkedin.com/company/renthedge" target="_blank" class="btn-p">Conectar en LinkedIn →</a>
+      <a href="#modelo" class="btn-g">Revisar el modelo</a>
+    </div>
+  </div>
+  <div class="cta-cards">
+    <div class="cc reveal"><div class="cc-icon"></div><h4>Sandbox SFC</h4><p>Decreto 1234/2020 · Circular 016/2021 · Certificado temporal de operación</p></div>
+    <div class="cc reveal d1"><div class="cc-icon"></div><h4>Inversionistas ángel</h4><p>Capital mínimo $80–100M COP · SAS · Sin captación pública · Sin deuda externa</p></div>
+    <div class="cc reveal d2"><div class="cc-icon"></div><h4>Convenio DataCrédito</h4><p>Prioridad absoluta · Diferenciador irreemplazable · Inclusión financiera real</p></div>
+    <div class="cc reveal d3"><div class="cc-icon"></div><h4>Alianzas inmobiliarias</h4><p>2–3 inmobiliarias grandes de Bogotá para alcanzar los 200 clientes del piloto</p></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fl">
+    <svg width="26" height="26" viewBox="0 0 36 36" fill="none"><path d="M18 2L4 10v8c0 8.3 5.9 16.1 14 18 8.1-1.9 14-9.7 14-18v-8L18 2z" fill="rgba(0,200,150,.12)" stroke="#00c896" stroke-width="1.5"/><path d="M12 18l4 4 8-8" stroke="#00c896" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--green);font-size:.9rem">RentHedge</span>
+    <span style="color:var(--muted)">· Bogotá, Colombia · 2026</span>
+  </div>
+  <div class="fr">Taller Individual · Fintech · Juan Felipe Barriga Beltrán · 22 de abril de 2026<br>Cifras basadas en datos del Banco de la República, SFC y fuentes públicas a 2026.</div>
+</footer>
+
+<script>
+// ── SCROLL REVEAL ──
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
+},{threshold:0.1});
+document.querySelectorAll('.reveal,.step').forEach(el=>io.observe(el));
+
+// ── CHART CONFIG ──
+Chart.defaults.color='#7a90b8';
+Chart.defaults.font.family="'DM Sans',sans-serif";
+const gc='rgba(122,144,184,0.1)';
+const G='#00c896',GO='#f0c060',R='#ff5a5a',B='#4a90e2';
+
+// 1. Cashflow
+new Chart(document.getElementById('c1'),{
+  type:'bar',
+  data:{
+    labels:['Ingresos\nPrimas','Desembolsos\nBrutos','Recuperación\n(85% repago)','Pérdida\nNeta','Rend.\nPortafolio'],
+    datasets:[{data:[12e6,-14.28e6,12.14e6,-2.14e6,740e3],backgroundColor:[G,R,G,R,GO],borderRadius:6,borderSkipped:false}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$'+(c.raw/1e6).toFixed(2)+'M COP'}}},scales:{x:{grid:{color:gc},ticks:{font:{size:9}}},y:{grid:{color:gc},ticks:{callback:v=>'$'+(v/1e6).toFixed(1)+'M',font:{size:9}}}}}
+});
+
+// 2. Capital distribution
+new Chart(document.getElementById('c2'),{
+  type:'doughnut',
+  data:{
+    labels:['Reserva técnica (3 meses)','Capital operativo (6 meses)','Tecnología y convenios','Buffer contingencias'],
+    datasets:[{data:[50,25,15,10],backgroundColor:[G,GO,B,'rgba(122,144,184,.4)'],borderColor:'#0d1530',borderWidth:3,hoverOffset:6}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:9},padding:10}},tooltip:{callbacks:{label:c=>c.label+': '+c.raw+'%'}}}}
+});
+
+// 3. Accumulation
+const meses=['Mes 1','Mes 2','Mes 3','Mes 4','Mes 5','Mes 6'];
+const acum=[12,24,36,48,60,72].map(v=>v*1e6);
+const rendAcum=[0];
+let rAcumTotal=0;
+[12,24,36,48,60,72].forEach((m,i)=>{
+  const rMes=(m*1e6)*0.010208; // 13% EA prom. portafolio = (1.13^(1/12)-1); TES+renta fija corp., BVC abr.2026
+  rAcumTotal+=rMes;
+  if(i>0) rendAcum.push(rAcumTotal);
+});
+const withR=acum.map((v,i)=>v+rendAcum[i]);
+new Chart(document.getElementById('c3'),{
+  type:'line',
+  data:{
+    labels:meses,
+    datasets:[
+      {label:'Primas acumuladas',data:acum,borderColor:G,backgroundColor:'rgba(0,200,150,.08)',fill:true,tension:.3,pointRadius:4,borderWidth:2},
+      {label:'Con rendimientos del portafolio (TES + renta fija)',data:withR,borderColor:GO,backgroundColor:'transparent',borderDash:[5,3],tension:.3,pointRadius:3,borderWidth:2}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:10,font:{size:9},padding:10}},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+(c.raw/1e6).toFixed(1)+'M COP'}}},scales:{x:{grid:{color:gc}},y:{grid:{color:gc},ticks:{callback:v=>'$'+(v/1e6).toFixed(0)+'M'}}}}
+});
+
+// 4. Activation scenarios
+new Chart(document.getElementById('c4'),{
+  type:'bar',
+  data:{
+    labels:['Optimista\n(4%)','Base\n(7%)','Estrés\n(12%)','Crisis\n(18%)'],
+    datasets:[{label:'Desembolso mensual (COP)',data:[8.16e6,14.28e6,24.48e6,36.72e6],backgroundColor:[G,GO,'#f0a060',R],borderRadius:6,borderSkipped:false}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$'+(c.raw/1e6).toFixed(1)+'M COP'}}},scales:{x:{grid:{color:gc},ticks:{font:{size:9}}},y:{grid:{color:gc},ticks:{callback:v=>'$'+(v/1e6).toFixed(0)+'M',font:{size:9}}}}}
+});
+</script>
+</body>
+</html>
