@@ -203,8 +203,7 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">
-    <!-- Reemplaza este SVG con tu logo una vez lo tengas -->
+  <a href="index.html" class="nav-logo">
     <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
       <path d="M18 2L4 10v8c0 8.3 5.9 16.1 14 18 8.1-1.9 14-9.7 14-18v-8L18 2z" fill="rgba(0,200,150,.12)" stroke="#00c896" stroke-width="1.5"/>
       <path d="M12 18l4 4 8-8" stroke="#00c896" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -212,7 +211,7 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
     <span class="nav-brand">RentHedge</span>
   </a>
   <div class="nav-links">
-      <a href="index.html">Inicio</a>
+      <a href="index.html" style="color:var(--green)">Inicio</a>
       <a href="modelo.html">Modelo Financiero</a>
       <a href="mercado.html">Mercado</a>
       <a href="regulacion.html">Regulación</a>
@@ -454,7 +453,7 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
       <div class="rcard reveal"><div class="rl rl-high">Crítico</div><h4>Convenio DataCrédito</h4><p>Sin este convenio el producto pierde su diferenciador más poderoso. Es la prioridad absoluta antes del lanzamiento del piloto.</p></div>
       <div class="rcard reveal d1"><div class="rl rl-high">Alto</div><h4>Tasa de activación &gt;7%</h4><p>El deterioro macro puede elevar el desempleo y presionar la activación. La cobertura escalonada (80%/50%) reduce la exposición máxima en ~15% respecto a cobertura fija. Comité de riesgos trimestral revisa parámetros y ajusta el modelo.</p></div>
       <div class="rcard reveal d2"><div class="rl rl-med">Medio</div><h4>GMF del 4×1000</h4><p>$240 por prima de $60K y $4.800 por siniestro de $1.2M. Incorporado explícitamente al modelo de costos desde el inicio.</p></div>
-      <div class="rcard reveal d3"><div class="rl rl-med">Medio</div><h4>Incertidumbre regulatoria</div><p>Decretos en curso en 2026 pueden modificar condiciones del sandbox o reglas de DataCrédito durante el piloto.</p></div>
+      <div class="rcard reveal d3"><div class="rl rl-med">Medio</div><h4>Incertidumbre regulatoria</h4><p>Decretos en curso en 2026 pueden modificar condiciones del sandbox o reglas de DataCrédito durante el piloto.</p></div>
       <div class="rcard reveal d4"><div class="rl rl-med">Medio</div><h4>Riesgo cibernético (Bre-B)</h4><p>Masificación de Bre-B amplía superficie de ataque. Un incidente en pago crítico puede destruir confianza en etapa frágil.</p></div>
       <div class="rcard reveal"><div class="rl rl-low">Bajo</div><h4>Riesgo de corrida</h4><p>Las primas son irrevocables para el asegurador. No hay riesgo de corrida bancaria como en depósitos. El fondo de reserva es estable.</p></div>
     </div>
@@ -580,7 +579,7 @@ const acum=[12,24,36,48,60,72].map(v=>v*1e6);
 const rendAcum=[0];
 let rAcumTotal=0;
 [12,24,36,48,60,72].forEach((m,i)=>{
-  const rMes=(m*1e6)*0.010208; // 13% EA prom. portafolio = (1.13^(1/12)-1); TES+renta fija corp., BVC abr.2026
+  const rMes=(m*1e6)*0.010208;
   rAcumTotal+=rMes;
   if(i>0) rendAcum.push(rAcumTotal);
 });
