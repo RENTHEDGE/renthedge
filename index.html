@@ -182,42 +182,16 @@ section{padding:5.5rem 1.5rem;position:relative}
 .form-success p{font-size:.88rem;color:var(--muted)}
 footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;font-size:.77rem;color:var(--muted)}
 .fl{display:flex;align-items:center;gap:.6rem}
-/* ── MODAL DE BIENVENIDA ── */
-#welcomeModal{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:rgba(4,7,18,.92);backdrop-filter:blur(14px);animation:fadeIn .5s ease both}
-#welcomeModal.hidden{display:none}
-.wm-box{background:var(--surface);border:1px solid rgba(0,200,150,.25);border-radius:20px;max-width:580px;width:100%;padding:3rem 2.5rem;text-align:center;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.6),0 0 60px rgba(0,200,150,.06);animation:fadeUp .6s .1s ease both}
-.wm-logo{display:flex;align-items:center;justify-content:center;gap:.65rem;margin-bottom:1.5rem}
-.wm-brand{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;background:linear-gradient(120deg,var(--green),#7fffdf);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.wm-title{font-family:'Syne',sans-serif;font-size:clamp(1.5rem,5vw,2.1rem);font-weight:800;line-height:1.15;margin-bottom:1rem}
-.wm-body{font-size:.92rem;color:var(--muted);line-height:1.75;margin-bottom:2rem;max-width:440px;margin-left:auto;margin-right:auto}
-.wm-btn{display:inline-block;background:var(--green);color:#06091a;border:none;padding:.85rem 2.2rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .2s;text-decoration:none}
-.wm-btn:hover{background:var(--green2);box-shadow:0 8px 32px var(--glow);transform:translateY(-2px)}
-.wm-note{font-size:.72rem;color:rgba(122,144,184,.5);margin-top:1rem}
 </style>
 </head>
 <body>
-
-<!-- MODAL DE BIENVENIDA -->
-<div id="welcomeModal">
-  <div class="wm-box">
-    <div class="wm-logo">
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 2L4 10v8c0 8.3 5.9 16.1 14 18 8.1-1.9 14-9.7 14-18v-8L18 2z" fill="rgba(0,200,150,.12)" stroke="#00c896" stroke-width="1.5"/><path d="M12 18l4 4 8-8" stroke="#00c896" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="wm-brand">RentHedge</span>
-    </div>
-    <h2 class="wm-title">Bienvenido a <span style="color:var(--green)">RentHedge</span></h2>
-    <p class="wm-body">La primera fintech colombiana que protege al inquilino. Cubre hasta el 80% de tu arriendo en menos de 72 horas y mantiene limpio tu historial en DataCrédito — por solo $60.000 al mes.</p>
-    <button class="wm-btn" onclick="document.getElementById('welcomeModal').classList.add('hidden')">Explorar RentHedge &rarr;</button>
-    <p class="wm-note">Fintech &middot; Bogotá &middot; Colombia &middot; 2026</p>
-  </div>
-</div>
-
 <nav>
   <a href="index.html" class="nav-logo">
     <svg width="32" height="32" viewBox="0 0 36 36" fill="none"><path d="M18 2L4 10v8c0 8.3 5.9 16.1 14 18 8.1-1.9 14-9.7 14-18v-8L18 2z" fill="rgba(0,200,150,.12)" stroke="#00c896" stroke-width="1.5"/><path d="M12 18l4 4 8-8" stroke="#00c896" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <span class="nav-brand">RentHedge</span>
   </a>
   <div class="nav-links">
-    <a href="index.html" style="color:var(--green)">Inicio</a>
+    <a href="welcome.html" style="color:var(--green)">Inicio</a>
     <a href="modelo.html">Modelo Financiero</a>
     <a href="mercado.html">Mercado</a>
     <a href="regulacion.html">Regulación</a>
@@ -416,10 +390,10 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
   <div class="container">
     <div class="reveal"><div class="eyebrow">Equipo fundador</div><h2 class="sec-title">Las personas detrás de RentHedge</h2><p class="sec-body">Estudiantes de Finanzas y Administración de Empresas de la Pontificia Universidad Javeriana, Bogotá.</p></div>
     <div class="team-grid">
-      <div class="tcard reveal"><div class="tavatar">JF</div><div class="tname">Juan Felipe Barriga Beltrán</div><div class="trole">CEO &amp; Co-Founder</div><a href="https://www.linkedin.com/in/juan-felipe-barriga-beltr%C3%A1n-3836a9351/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a></div>
-      <div class="tcard reveal d1"><div class="tavatar">JD</div><div class="tname">Jesús David Quevedo Baquero</div><div class="trole">CTO &amp; Co-Founder</div><a href="https://www.linkedin.com/in/jesus-david-quevedo-baquero-a4b089239/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a></div>
-      <div class="tcard reveal d2"><div class="tavatar">AS</div><div class="tname">Ana Sofía Rojas Valderrama</div><div class="trole">CFO &amp; Co-Founder</div><a href="https://www.linkedin.com/in/ana-sof%C3%ADa-rojas-valderrama-0495903ab/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a></div>
-      <div class="tcard reveal d3"><div class="tavatar">NR</div><div class="tname">Nicolás Ruiz Villabona</div><div class="trole">COO &amp; Co-Founder</div><a href="https://www.linkedin.com/in/juan-nicolas-ruiz-villabona-478089239/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a></div>
+      <div class="tcard reveal"><div class="tavatar">JF</div><div class="tname">Juan Felipe Barriga Beltrán</div><div class="trole">CEO & Co-Founder</div><a href="https://www.linkedin.com/in/juan-felipe-barriga-beltr%C3%A1n-3836a9351/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a></div>
+      <div class="tcard reveal d1"><div class="tavatar">JD</div><div class="tname">Jesús David Quevedo Baquero</div><div class="trole">CTO & Co-Founder</div><a href="https://www.linkedin.com/in/jesus-david-quevedo-baquero-a4b089239/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a></div>
+      <div class="tcard reveal d2"><div class="tavatar">AS</div><div class="tname">Ana Sofía Rojas Valderrama</div><div class="trole">CFO & Co-Founder</div><a href="https://www.linkedin.com/in/ana-sof%C3%ADa-rojas-valderrama-0495903ab/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a></div>
+      <div class="tcard reveal d3"><div class="tavatar">NR</div><div class="tname">Nicolás Ruiz Villabona</div><div class="trole">COO & Co-Founder</div><a href="https://www.linkedin.com/in/juan-nicolas-ruiz-villabona-478089239/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a></div>
     </div>
   </div>
 </section>
@@ -448,7 +422,7 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
     <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--green);font-size:.9rem">RentHedge</span>
     <span style="color:var(--muted)">· Bogotá, Colombia · 2026</span>
   </div>
-  <div><a href="welcome.html" style="color:var(--muted);text-decoration:none;font-size:.76rem;opacity:.55;transition:opacity .2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">Ver página de inicio →</a></div>
+  <div><a href="index.html" style="color:var(--muted);text-decoration:none;font-size:.76rem;opacity:.55;transition:opacity .2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55">← Volver a la portada</a></div>
   <div style="font-size:.7rem;color:rgba(122,144,184,.35);text-align:right;max-width:400px;line-height:1.5">Taller Individual · Fintech · Juan Felipe Barriga Beltrán · 22 de abril de 2026</div>
 </footer>
 
