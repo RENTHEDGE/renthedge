@@ -158,7 +158,8 @@ section{padding:5.5rem 1.5rem;position:relative}
 .tcard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.7rem 1.4rem;text-align:center;transition:all .25s;position:relative;overflow:hidden}
 .tcard:hover{border-color:rgba(0,200,150,.3);transform:translateY(-4px)}
 .tcard::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(0,200,150,.05) 0%,transparent 70%);pointer-events:none}
-.tavatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--surface2),var(--surface));border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--green)}
+.tavatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--surface2),var(--surface));border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--green);object-fit:cover;overflow:hidden}
+img.tavatar{border:2px solid rgba(0,200,150,.35);padding:0}
 .tname{font-family:'Syne',sans-serif;font-weight:700;font-size:.93rem;margin-bottom:.22rem}
 .trole{font-size:.77rem;color:var(--green);font-weight:500;margin-bottom:.6rem}
 .tli{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;color:var(--muted);text-decoration:none;background:rgba(122,144,184,.08);padding:.25rem .7rem;border-radius:20px;border:1px solid rgba(122,144,184,.15);transition:all .2s}
@@ -390,10 +391,26 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
   <div class="container">
     <div class="reveal"><div class="eyebrow">Equipo fundador</div><h2 class="sec-title">Las personas detrás de RentHedge</h2><p class="sec-body">Estudiantes de Finanzas y Administración de Empresas de la Pontificia Universidad Javeriana, Bogotá.</p></div>
     <div class="team-grid">
-      <div class="tcard reveal"><div class="tavatar">JF</div><div class="tname">Juan Felipe Barriga Beltrán</div><div class="trole">CEO & Co-Founder</div><a href="https://www.linkedin.com/in/juan-felipe-barriga-beltr%C3%A1n-3836a9351/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a></div>
-      <div class="tcard reveal d1"><div class="tavatar">JD</div><div class="tname">Jesús David Quevedo Baquero</div><div class="trole">CTO & Co-Founder</div><a href="https://www.linkedin.com/in/jesus-david-quevedo-baquero-a4b089239/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a></div>
-      <div class="tcard reveal d2"><div class="tavatar">AS</div><div class="tname">Ana Sofía Rojas Valderrama</div><div class="trole">CFO & Co-Founder</div><a href="https://www.linkedin.com/in/ana-sof%C3%ADa-rojas-valderrama-0495903ab/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a></div>
-      <div class="tcard reveal d3"><div class="tavatar">NR</div><div class="tname">Nicolás Ruiz Villabona</div><div class="trole">COO & Co-Founder</div><a href="https://www.linkedin.com/in/juan-nicolas-ruiz-villabona-478089239/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a></div>
+      <div class="tcard reveal">
+        <img class="tavatar" src="1774068299497.jpeg" alt="Juan Felipe Barriga Beltrán">
+        <div class="tname">Juan Felipe Barriga Beltrán</div><div class="trole">CEO & Co-Founder</div>
+        <a href="https://www.linkedin.com/in/juan-felipe-barriga-beltr%C3%A1n-3836a9351/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
+      </div>
+      <div class="tcard reveal d1">
+        <img class="tavatar" src="1773898790333.jpeg" alt="Jesús David Quevedo Baquero">
+        <div class="tname">Jesús David Quevedo Baquero</div><div class="trole">CTO & Co-Founder</div>
+        <a href="https://www.linkedin.com/in/jesus-david-quevedo-baquero-a4b089239/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
+      </div>
+      <div class="tcard reveal d2">
+        <div class="tavatar">AS</div>
+        <div class="tname">Ana Sofía Rojas Valderrama</div><div class="trole">CFO & Co-Founder</div>
+        <a href="https://www.linkedin.com/in/ana-sof%C3%ADa-rojas-valderrama-0495903ab/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
+      </div>
+      <div class="tcard reveal d3">
+        <img class="tavatar" src="F73A6DFE-1E0A-4F9F-8783-06C51BA7A041.jpeg" alt="Nicolás Ruiz Villabona">
+        <div class="tname">Nicolás Ruiz Villabona</div><div class="trole">COO & Co-Founder</div>
+        <a href="https://www.linkedin.com/in/juan-nicolas-ruiz-villabona-478089239/" target="_blank" class="tli"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
+      </div>
     </div>
   </div>
 </section>
