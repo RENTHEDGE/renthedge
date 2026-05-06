@@ -25,9 +25,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.9rem 2rem;display:f
 .nav-links{display:flex;gap:2rem}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s}
 .nav-links a:hover{color:var(--green)}
-.nav-cta{background:var(--green);color:#06091a;border:none;padding:.48rem 1.1rem;border-radius:6px;font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s;text-decoration:none}
-.nav-cta:hover{background:var(--green2);box-shadow:0 0 24px var(--glow)}
 @media(max-width:640px){nav{padding:.8rem 1.2rem}.nav-links{display:none}}
+
+/* DROPDOWN */
+.nav-dropdown{position:relative}
+.nav-cta{background:var(--green);color:#06091a;border:none;padding:.48rem 1.1rem;border-radius:6px;font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem}
+.nav-cta:hover{background:var(--green2);box-shadow:0 0 24px var(--glow)}
+.nav-cta svg{transition:transform .2s}
+.nav-dropdown.open .nav-cta svg{transform:rotate(180deg)}
+.dropdown-menu{display:none;position:absolute;top:calc(100% + .6rem);right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;min-width:200px;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.5);z-index:200}
+.nav-dropdown.open .dropdown-menu{display:block}
+.dropdown-menu a{display:flex;align-items:center;gap:.65rem;padding:.7rem 1rem;font-size:.84rem;color:var(--muted);text-decoration:none;transition:background .15s,color .15s;border-bottom:1px solid rgba(255,255,255,.04)}
+.dropdown-menu a:last-child{border-bottom:none}
+.dropdown-menu a:hover{background:rgba(0,200,150,.07);color:var(--green)}
+.dropdown-menu a span.di{font-size:.65rem;background:rgba(0,200,150,.1);border:1px solid rgba(0,200,150,.2);color:var(--green);padding:.1rem .4rem;border-radius:4px;font-weight:700;letter-spacing:.05em;white-space:nowrap}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8rem 1.5rem 5rem;text-align:center;position:relative;overflow:hidden}
@@ -193,6 +204,31 @@ section{padding:5.5rem 1.5rem;position:relative}
 .cc h4{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;margin-bottom:.3rem}
 .cc p{font-size:.78rem;color:var(--muted);line-height:1.5}
 
+/* CONTACT FORM */
+.contact-section{padding:5.5rem 1.5rem;background:var(--bg);border-top:1px solid var(--border)}
+.contact-wrap{max-width:620px;margin:0 auto}
+.contact-form{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.4rem;margin-top:2rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:560px){.form-row{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
+.form-group label{font-size:.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.form-group input,.form-group textarea,.form-group select{
+  background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  padding:.7rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);
+  transition:border-color .2s,box-shadow .2s;outline:none;
+}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{
+  border-color:var(--green);box-shadow:0 0 0 3px rgba(0,200,150,.1);
+}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-group select option{background:var(--surface2)}
+.form-submit{width:100%;background:var(--green);color:#06091a;border:none;padding:.85rem;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .2s;margin-top:.5rem}
+.form-submit:hover{background:var(--green2);box-shadow:0 8px 32px var(--glow);transform:translateY(-2px)}
+.form-note{font-size:.72rem;color:var(--muted);text-align:center;margin-top:.9rem;line-height:1.5}
+.form-success{display:none;text-align:center;padding:2rem;background:rgba(0,200,150,.07);border:1px solid rgba(0,200,150,.2);border-radius:12px}
+.form-success h3{font-family:'Syne',sans-serif;font-weight:700;color:var(--green);margin-bottom:.5rem}
+.form-success p{font-size:.88rem;color:var(--muted)}
+
 /* FOOTER */
 footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;font-size:.77rem;color:var(--muted)}
 .fl{display:flex;align-items:center;gap:.6rem}
@@ -217,7 +253,23 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
     <a href="regulacion.html">Regulación</a>
     <a href="fuentes.html">Fuentes</a>
   </div>
-  <a href="modelo.html" class="nav-cta">Ver Modelo →</a>
+  <div class="nav-dropdown" id="navDropdown">
+    <button class="nav-cta" onclick="toggleDropdown()">
+      Explorar ↓
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5l3 3 3-3" stroke="#06091a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="dropdown-menu">
+      <a href="#problema"><span class="di">01</span> El Problema</a>
+      <a href="#como-funciona"><span class="di">02</span> Cómo Funciona</a>
+      <a href="#modelo"><span class="di">03</span> Modelo Financiero</a>
+      <a href="#comparativo"><span class="di">04</span> Ventaja Competitiva</a>
+      <a href="#mercado"><span class="di">05</span> Mercado</a>
+      <a href="#regulacion"><span class="di">06</span> Regulación</a>
+      <a href="#riesgos"><span class="di">07</span> Riesgos</a>
+      <a href="#equipo"><span class="di">08</span> Equipo</a>
+      <a href="#contacto"><span class="di">09</span> Contacto</a>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -252,7 +304,7 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
     <div class="ng">
       <div class="ncard reveal d1"><div class="ncard-stat">Día 1</div><h3>Reporte negativo a DataCrédito</h3><p>El propietario puede reportar inmediatamente, cerrando el acceso a crédito, nuevos arriendos y hasta empleos en Colombia.</p></div>
       <div class="ncard reveal d2"><div class="ncard-stat">6–24 meses</div><h3>Proceso de desalojo — Ley 820/2003</h3><p>Aunque el proceso demora meses o años, el estrés jurídico y la incertidumbre habitacional comienzan el primer día de mora.</p></div>
-      <div class="ncard reveal d3"><div class="ncard-stat">+Intereses</div><h3>Deuda que se acumula sin freno</h3><p>La deuda pendiente crece con intereses mientras el inquilino intenta recuperarse, creando un ciclo financiero difícil de romper. En 2026 los arriendos pueden aumentar hasta 5,1% (tope legal = IPC 2025 según DANE / Ley 820/2003).</p></div>
+      <div class="ncard reveal d3"><div class="ncard-stat">+Intereses</div><h3>Deuda que se acumula sin freno</h3><p>La deuda pendiente crece con intereses mientras el inquilino intenta recuperarse. En 2026 los arriendos pueden aumentar hasta 5,1% (tope legal = IPC 2025 según DANE / Ley 820/2003).</p></div>
       <div class="ncard gold-card reveal d4"><div class="ncard-stat gold">2M+</div><h3>Personas en microcredito activo</h3><p>El mercado de bajo valor funciona en Colombia — la cartera microcrediticia supera los $2,2 billones COP. RentHedge es viable.</p></div>
     </div>
     <div class="insight reveal">
@@ -288,11 +340,11 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
       <div class="tlc"><div class="tlp">Día 91+</div><div class="tle">Reporte si no repaga</div><div class="tld r"></div></div>
     </div>
     <div class="steps" id="stepsEl">
-      <div class="step"><div class="snum">01</div><div class="sbody"><h3>Prima mensual de $60.000 — 4% del arriendo</h3><p>Con el arriendo promedio de Bogotá en $1.500.000 (DANE / Lonjas de Propiedad Raíz, 2025), son $60.000 al mes — menos que un plan de datos premium. Sin letra chica.</p><span class="pill">4% del arriendo mensual · Arriendo prom. Bogotá: DANE / Lonjas 2025</span></div></div>
-      <div class="step"><div class="snum">02</div><div class="sbody"><h3>Historial crediticio positivo en DataCrédito</h3><p>Una vez firmado el convenio con TransUnion/DataCrédito — prioridad absoluta antes del lanzamiento — RentHedge reporta comportamiento positivo desde el primer pago, construyendo crédito para personas invisibles al sistema bancario. Este es el diferenciador más poderoso del producto.</p><span class="pill">Previa autorización SFC como operador de información</span></div></div>
-      <div class="step"><div class="snum">03</div><div class="sbody"><h3>6 meses de carencia: las reservas trabajan mientras la cobertura madura</h3><p>Durante la carencia, las primas acumuladas se invierten en un portafolio diversificado conforme al régimen de inversiones admisibles para reservas técnicas (Decreto 2953/2010, SFC). El portafolio combina tres instrumentos: <strong>TES Clase B</strong> (60% del fondo, rendimiento ~13,1% EA a 10 años según BVC abril 2026), <strong>bonos de deuda corporativa investment-grade</strong> en la Bolsa de Valores de Colombia (30%, rendimiento ~11–12% EA), y <strong>fondos de inversión colectiva de renta fija</strong> (10%, liquidez inmediata). El fondo de $72.000.000 acumulado al mes 6 genera aproximadamente $8,5–9,4M anuales en rendimientos — equivalente a $700.000–$780.000 mensuales adicionales desde el mes 7.</p><span class="pill gold">TES 13,1% · Renta fija corp. 11–12% · Fuente: BVC / Bancolombia, abr. 2026</span><span class="pill" style="margin-left:.4rem">Régimen: Decreto 2953/2010 · SFC</span></div></div>
-      <div class="step"><div class="snum">04</div><div class="sbody"><h3>Verificación del evento y pago inmediato vía Bre-B</h3><p>El evento se verifica automáticamente cruzando fuentes objetivas: reporte PILA (ausencia de cotización = pérdida de empleo), certificado de incapacidad médica o notificación de cierre empresarial. Sin reclamo subjetivo del usuario — el sistema consulta la fuente y activa el pago en menos de 20 segundos vía Bre-B: <strong>80% del arriendo en la primera activación del año, 50% en la segunda</strong>. 24/7/365, irrevocable, costo cero en DICE durante los primeros años.</p><span class="pill">Bre-B · Liquidación en tiempo real</span> <span class="pill gold">Irrevocable · 24/7/365</span></div></div>
-      <div class="step"><div class="snum">05</div><div class="sbody"><h3>30 días sin intereses para recuperarse</h3><p>El inquilino repaga sin intereses en 30 días. Hasta el día 90 con interés máximo legal. Si al día 91 no ha repagado: reporte a DataCrédito y cancelación de póliza. Máximo 2 activaciones por año — la segunda con cobertura del 50%, desincentivando el uso recurrente sin penalizar el caso legítimo.</p><span class="pill">Máx. 2 activaciones / año</span></div></div>
+      <div class="step"><div class="snum">01</div><div class="sbody"><h3>Prima mensual de $60.000 — 4% del arriendo</h3><p>Con el arriendo promedio de Bogotá en $1.500.000 (DANE / Lonjas de Propiedad Raíz, 2025), son $60.000 al mes — menos que un plan de datos premium.</p><span class="pill">4% del arriendo mensual · DANE / Lonjas 2025</span></div></div>
+      <div class="step"><div class="snum">02</div><div class="sbody"><h3>Historial crediticio positivo en DataCrédito</h3><p>Una vez firmado el convenio con TransUnion/DataCrédito, RentHedge reporta comportamiento positivo desde el primer pago, construyendo crédito para personas invisibles al sistema bancario.</p><span class="pill">Previa autorización SFC como operador de información</span></div></div>
+      <div class="step"><div class="snum">03</div><div class="sbody"><h3>6 meses de carencia: las reservas trabajan</h3><p>Las primas se invierten en TES Clase B (60%, ~13,1% EA), bonos corporativos investment-grade (30%, ~11–12% EA) y fondos de renta fija (10%, liquidez inmediata). El fondo de $72M al mes 6 genera ~$700K–780K adicionales mensuales.</p><span class="pill gold">TES 13,1% · BVC / Bancolombia, abr. 2026</span></div></div>
+      <div class="step"><div class="snum">04</div><div class="sbody"><h3>Verificación automática y pago vía Bre-B</h3><p>Cruce PILA + incapacidad médica o cierre empresarial. Pago irrevocable en &lt;20 segundos: <strong>80% primera activación, 50% segunda</strong>. 24/7/365.</p><span class="pill">Bre-B · Irrevocable</span> <span class="pill gold">24/7/365</span></div></div>
+      <div class="step"><div class="snum">05</div><div class="sbody"><h3>30 días sin intereses para recuperarse</h3><p>Repago sin intereses en 30 días. Hasta día 90 con interés máximo legal. Día 91: reporte a DataCrédito y cancelación. Máx. 2 activaciones / año.</p><span class="pill">Máx. 2 activaciones / año</span></div></div>
     </div>
   </div>
 </section>
@@ -304,26 +356,26 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
     <div class="reveal">
       <div class="eyebrow">Modelo financiero</div>
       <h2 class="sec-title">La matemática que lo hace sostenible</h2>
-      <p class="sec-body">Punto de quiebre en 200 clientes activos. Con cobertura escalonada (80% primera activación / 50% segunda), tasa de activación del 7% y recuperación estimada del 85% de los desembolsos, la pérdida neta mensual es de ~$2,1M — menor que en el modelo de cobertura fija. Autosostenible sin deuda externa ni captación de depósitos del público.</p>
+      <p class="sec-body">Punto de quiebre en 200 clientes activos. Tasa de activación del 7%, recuperación estimada del 85%, pérdida neta mensual ~$2,1M. Autosostenible sin deuda externa.</p>
     </div>
     <div class="metrics-row reveal">
       <div class="met"><span class="met-val">200</span><div class="met-label">Clientes para punto de quiebre</div></div>
-      <div class="met"><span class="met-val">$12M</span><div class="met-label">Ingresos mensuales en equilibrio (COP)</div></div>
-      <div class="met"><span class="met-val">7%</span><div class="met-label">Tasa de activación conservadora<br><small style="font-size:.65rem;color:var(--muted);font-weight:400">DANE: desempleo enero 2026 = 10,9%; marzo 2026 = 8,8% · Máx. 2 activaciones/año por cliente</small></div></div>
+      <div class="met"><span class="met-val">$12M</span><div class="met-label">Ingresos mensuales en equilibrio</div></div>
+      <div class="met"><span class="met-val">7%</span><div class="met-label">Tasa de activación conservadora<br><small style="font-size:.65rem;color:var(--muted);font-weight:400">DANE: desempleo enero 2026 = 10,9%</small></div></div>
       <div class="met"><span class="met-val">$80–100M</span><div class="met-label">Capital mínimo recomendado (COP)</div></div>
-      <div class="met"><span class="met-val">12–14%</span><div class="met-label">Rendimiento esperado del portafolio de reservas<br><small style="font-size:.65rem;color:var(--muted);font-weight:400">TES 10 años: 13,1% · Renta fija local: 12,5% EA · Fuente: Bancolombia / BVC, 2026</small></div></div>
+      <div class="met"><span class="met-val">12–14%</span><div class="met-label">Rendimiento esperado portafolio<br><small style="font-size:.65rem;color:var(--muted);font-weight:400">TES + renta fija · BVC / Bancolombia 2026</small></div></div>
     </div>
     <div class="charts-grid">
-      <div class="cchart reveal"><h3>Flujo de caja mensual — 200 clientes (COP)</h3><div class="cw"><canvas id="c1"></canvas></div></div>
+      <div class="cchart reveal"><h3>Flujo de caja mensual — 200 clientes</h3><div class="cw"><canvas id="c1"></canvas></div></div>
       <div class="cchart reveal d1"><h3>Distribución del capital inicial</h3><div class="cw"><canvas id="c2"></canvas></div></div>
-      <div class="cchart reveal d2"><h3>Acumulación del fondo de reservas — carencia (6 meses)</h3><div class="cw"><canvas id="c3"></canvas></div></div>
+      <div class="cchart reveal d2"><h3>Acumulación del fondo de reservas</h3><div class="cw"><canvas id="c3"></canvas></div></div>
       <div class="cchart reveal d3"><h3>Escenarios de activación mensual</h3><div class="cw"><canvas id="c4"></canvas></div></div>
     </div>
     <div class="cnote reveal">
       <div class="cnote-icon"></div>
       <div>
         <div class="cnote-label">Principio rector de capital</div>
-        <p class="cnote-text">No captar recursos del público. No tomar deuda externa. Capital 100% de fundadores o inversionistas privados. <strong>Los rendimientos del portafolio de reservas (TES, bonos corporativos, fondos de renta fija) están sujetos a retención en la fuente del 7% sobre intereses (ET Art. 395) e impuesto de renta del 35% para personas jurídicas (Ley 2277/2022). Las ganancias en renta variable están sujetas a impuesto de ganancias ocasionales. Rentabilidad siempre presentada neta de impuestos.</strong> El GMF del 4×1000 aplica sobre cada transacción y está incorporado al modelo de costos (Estatuto Tributario, Art. 870–879; vigente 2026).</p>
+        <p class="cnote-text">No captar recursos del público. No tomar deuda externa. Capital 100% de fundadores o inversionistas privados. <strong>Rendimientos sujetos a retención en la fuente del 7% (ET Art. 395) e impuesto de renta del 35% (Ley 2277/2022). GMF del 4×1000 incorporado al modelo (ET Art. 870–879).</strong></p>
       </div>
     </div>
   </div>
@@ -336,7 +388,7 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
     <div class="reveal">
       <div class="eyebrow">Ventaja competitiva</div>
       <h2 class="sec-title">RentHedge vs. el mercado</h2>
-      <p class="sec-body">Los seguros tradicionales protegen al propietario. Las fintech de crédito crean deuda. Las proptech intermedian transacciones. RentHedge es el único producto que protege al inquilino.</p>
+      <p class="sec-body">Los seguros tradicionales protegen al propietario. Las fintech de crédito crean deuda. RentHedge es el único producto que protege al inquilino.</p>
     </div>
     <div class="tbl-wrap reveal">
       <table class="ctable">
@@ -345,12 +397,11 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
         </thead>
         <tbody>
           <tr><td class="fc">¿Quién es el beneficiario?</td><td class="gc"><span class="yes"></span> El inquilino</td><td>El propietario</td><td>El inquilino (vía deuda)</td><td>Propietario / comprador</td></tr>
-          <tr><td class="fc">¿Crea deuda en el balance?</td><td class="gc"><span class="yes"></span> No</td><td>No (para el inquilino)</td><td><span class="no"></span> Sí, con intereses desde día 1</td><td>N/A</td></tr>
+          <tr><td class="fc">¿Crea deuda en el balance?</td><td class="gc"><span class="yes"></span> No</td><td>No</td><td><span class="no"></span> Sí, con intereses desde día 1</td><td>N/A</td></tr>
           <tr><td class="fc">Construye historial crediticio</td><td class="gc"><span class="yes"></span> Desde el mes 1</td><td>No</td><td>Solo si paga a tiempo</td><td>No</td></tr>
-          <tr><td class="fc">Pago al propietario &lt;72 hrs</td><td class="gc"><span class="yes"></span> Vía Bre-B, irrevocable</td><td>Proceso judicial contra inquilino</td><td>N/A</td><td>N/A</td></tr>
-          <tr><td class="fc">Costo al inquilino</td><td class="gc"><span class="yes"></span> $60.000/mes (prima)</td><td>Requisito de entrada (traslado)</td><td>Interés + riesgo de reporte</td><td>Comisión de transacción</td></tr>
-          <tr><td class="fc">Relación con proptech</td><td class="gc"><span class="yes"></span> Aliados de distribución</td><td>Paralelo</td><td>Competidor indirecto</td><td>→ Canal de distribución</td></tr>
-          <tr><td class="fc">Modelo de ingresos</td><td class="gc">Prima mensual recurrente</td><td>Prima por contrato del propietario</td><td>Interés sobre crédito</td><td>Comisión por transacción</td></tr>
+          <tr><td class="fc">Pago al propietario &lt;72 hrs</td><td class="gc"><span class="yes"></span> Vía Bre-B, irrevocable</td><td>Proceso judicial</td><td>N/A</td><td>N/A</td></tr>
+          <tr><td class="fc">Costo al inquilino</td><td class="gc"><span class="yes"></span> $60.000/mes</td><td>Traslado de contrato</td><td>Interés + riesgo reporte</td><td>Comisión transacción</td></tr>
+          <tr><td class="fc">Modelo de ingresos</td><td class="gc">Prima mensual recurrente</td><td>Prima propietario</td><td>Interés sobre crédito</td><td>Comisión transacción</td></tr>
         </tbody>
       </table>
     </div>
@@ -367,12 +418,12 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
       <p class="sec-body">Colombia tiene la infraestructura digital, la regulación habilitante y la demanda urgente. El momento es 2026.</p>
     </div>
     <div class="market-grid">
-      <div class="mcard reveal"><span class="mcard-val">4M</span><div class="mcard-label">Hogares arrendatarios en Colombia sin ningún producto de protección orientado al inquilino</div><div class="mcard-source">DANE — Encuesta Nacional de Calidad de Vida (ECV) 2023; actualizaciones 2025</div></div>
-      <div class="mcard reveal d1"><span class="mcard-val">409</span><div class="mcard-label">Empresas fintech activas en Colombia en 2026, confirmando madurez del ecosistema digital</div><div class="mcard-source">Informe Colombia Fintech 2025</div></div>
-      <div class="mcard reveal d2"><span class="mcard-val">201,6%</span><div class="mcard-label">Crecimiento en número de operaciones de pagos inmediatos en Colombia durante 2024</div><div class="mcard-source">Reporte Infraestructura Financiera 2025, BanRep</div></div>
-      <div class="mcard reveal d3"><span class="mcard-val">&gt;80%</span><div class="mcard-label">De las operaciones financieras colombianas ya ocurren en canales digitales</div><div class="mcard-source">Banco de la República — Reporte de Infraestructura Financiera e Instrumentos de Pago 2025</div></div>
-      <div class="mcard reveal d4"><span class="mcard-val">$2,2B</span><div class="mcard-label">Cartera microcrediticia vigente en Colombia — el modelo de bajo valor es sostenible</div><div class="mcard-source">Encuesta Situación del Crédito, BanRep dic. 2025</div></div>
-      <div class="mcard reveal"><span class="mcard-val">41,7%</span><div class="mcard-label">Carga financiera de hogares colombianos — el product-market fit es urgente e inmediato</div><div class="mcard-source">Encuesta Situación del Crédito, BanRep dic. 2025</div></div>
+      <div class="mcard reveal"><span class="mcard-val">4M</span><div class="mcard-label">Hogares arrendatarios sin protección orientada al inquilino</div><div class="mcard-source">DANE — ECV 2023</div></div>
+      <div class="mcard reveal d1"><span class="mcard-val">409</span><div class="mcard-label">Empresas fintech activas en Colombia 2026</div><div class="mcard-source">Informe Colombia Fintech 2025</div></div>
+      <div class="mcard reveal d2"><span class="mcard-val">201,6%</span><div class="mcard-label">Crecimiento operaciones de pagos inmediatos en 2024</div><div class="mcard-source">BanRep — Reporte Infraestructura Financiera 2025</div></div>
+      <div class="mcard reveal d3"><span class="mcard-val">&gt;80%</span><div class="mcard-label">Operaciones financieras en canales digitales</div><div class="mcard-source">BanRep — Reporte Infraestructura 2025</div></div>
+      <div class="mcard reveal d4"><span class="mcard-val">$2,2B</span><div class="mcard-label">Cartera microcrediticia vigente en Colombia</div><div class="mcard-source">BanRep — dic. 2025</div></div>
+      <div class="mcard reveal"><span class="mcard-val">41,7%</span><div class="mcard-label">Carga financiera de hogares colombianos</div><div class="mcard-source">BanRep — dic. 2025</div></div>
     </div>
   </div>
 </section>
@@ -384,26 +435,26 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
     <div class="reveal">
       <div class="eyebrow">Marco regulatorio</div>
       <h2 class="sec-title">Certeza jurídica desde el día 1</h2>
-      <p class="sec-body">Colombia tiene el marco habilitante mínimo para operar en fase 1. La ruta del sandbox de la SFC es la más eficiente para validar el modelo sin requisitos de capital plenos.</p>
+      <p class="sec-body">Colombia tiene el marco habilitante mínimo para operar en fase 1. La ruta del sandbox SFC es la más eficiente.</p>
     </div>
     <div class="reg-grid">
       <div class="reg-card f1 reveal">
         <div class="rct"> Fase 1 — Sandbox SFC</div>
-        <div class="ri-item"><span class="ri">→</span><span>Decreto 1234/2020 + Circular 016/2021 · Certificado de operación temporal</span></div>
-        <div class="ri-item"><span class="ri">→</span><span>SAS con objeto financiero especial · Sin licencia plena de entrada</span></div>
-        <div class="ri-item"><span class="ri">→</span><span>Ley 1266/2008 + Ley 1581/2012 · Habeas data y protección de datos</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Decreto 1234/2020 + Circular 016/2021 · Certificado temporal</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>SAS con objeto financiero especial</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Ley 1266/2008 + Ley 1581/2012 · Habeas data</span></div>
         <div class="ri-item"><span class="ri">→</span><span>Ley 1328/2009 · Protección al consumidor financiero</span></div>
-        <div class="ri-item"><span class="ri">→</span><span>Bre-B vía participante indirecto (Nequi / Daviplata) · Evita trámite Res. 6/2023</span></div>
-        <div class="ri-item"><span class="ri" style="color:var(--gold)">★</span><span style="color:var(--text);font-weight:500">Convenio DataCrédito: prioridad absoluta antes del lanzamiento</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Bre-B vía participante indirecto (Nequi / Daviplata)</span></div>
+        <div class="ri-item"><span class="ri" style="color:var(--gold)">★</span><span style="color:var(--text);font-weight:500">Convenio DataCrédito: prioridad absoluta</span></div>
       </div>
       <div class="reg-card f2 reveal d1">
         <div class="rct"> Fase 2 — Post-sandbox</div>
-        <div class="ri-item"><span class="ri">→</span><span>Licencia plena ante la SFC como aseguradora o figura análoga</span></div>
-        <div class="ri-item"><span class="ri">→</span><span>Tokenización de pólizas como NFTs con derechos paramétricos</span></div>
-        <div class="ri-item"><span class="ri">→</span><span>Smart contracts una vez SFC y BanRep desarrollen el marco para activos digitales</span></div>
-        <div class="ri-item"><span class="ri">→</span><span>Decreto 1357/2018 · Posible fondeo por financiación colaborativa</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Licencia plena SFC como aseguradora</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Tokenización de pólizas como NFTs paramétricos</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Smart contracts (marco SFC / BanRep pendiente)</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Decreto 1357/2018 · Financiación colaborativa</span></div>
         <div class="ri-item"><span class="ri">→</span><span>Expansión a Medellín, Cali y Barranquilla</span></div>
-        <div class="ri-item"><span class="ri">→</span><span>Operador SPBVI directo ante el Banco de la República</span></div>
+        <div class="ri-item"><span class="ri">→</span><span>Operador SPBVI directo ante BanRep</span></div>
       </div>
     </div>
     <div class="aml reveal">
@@ -412,7 +463,7 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
         <div class="aml-item"><span></span><span>Validación biométrica en onboarding — Ley 1581/2012</span></div>
         <div class="aml-item"><span></span><span>Cruce contra listas OFAC, ONU y nacionales</span></div>
         <div class="aml-item"><span></span><span>Monitoreo de patrones anómalos de activación</span></div>
-        <div class="aml-item"><span></span><span>Reportes de operaciones sospechosas a la UIAF — Ley 526/1999</span></div>
+        <div class="aml-item"><span></span><span>Reportes a la UIAF — Ley 526/1999</span></div>
       </div>
     </div>
   </div>
@@ -425,15 +476,15 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
     <div class="reveal">
       <div class="eyebrow">Gestión de riesgos</div>
       <h2 class="sec-title">Riesgos identificados y mitigados</h2>
-      <p class="sec-body">Transparencia total sobre las variables que pueden comprometer el modelo, y la estrategia de respuesta para cada una.</p>
+      <p class="sec-body">Transparencia total sobre las variables que pueden comprometer el modelo.</p>
     </div>
     <div class="risk-grid">
-      <div class="rcard reveal"><div class="rl rl-high">Crítico</div><h4>Convenio DataCrédito</h4><p>Sin este convenio el producto pierde su diferenciador más poderoso. Es la prioridad absoluta antes del lanzamiento del piloto.</p></div>
-      <div class="rcard reveal d1"><div class="rl rl-high">Alto</div><h4>Tasa de activación &gt;7%</h4><p>El deterioro macro puede elevar el desempleo y presionar la activación. La cobertura escalonada (80%/50%) reduce la exposición máxima en ~15% respecto a cobertura fija. Comité de riesgos trimestral revisa parámetros y ajusta el modelo.</p></div>
-      <div class="rcard reveal d2"><div class="rl rl-med">Medio</div><h4>GMF del 4×1000</h4><p>$240 por prima de $60K y $4.800 por siniestro de $1.2M. Incorporado explícitamente al modelo de costos desde el inicio.</p></div>
-      <div class="rcard reveal d3"><div class="rl rl-med">Medio</div><h4>Incertidumbre regulatoria</h4><p>Decretos en curso en 2026 pueden modificar condiciones del sandbox o reglas de DataCrédito durante el piloto.</p></div>
-      <div class="rcard reveal d4"><div class="rl rl-med">Medio</div><h4>Riesgo cibernético (Bre-B)</h4><p>Masificación de Bre-B amplía superficie de ataque. Un incidente en pago crítico puede destruir confianza en etapa frágil.</p></div>
-      <div class="rcard reveal"><div class="rl rl-low">Bajo</div><h4>Riesgo de corrida</h4><p>Las primas son irrevocables para el asegurador. No hay riesgo de corrida bancaria como en depósitos. El fondo de reserva es estable.</p></div>
+      <div class="rcard reveal"><div class="rl rl-high">Crítico</div><h4>Convenio DataCrédito</h4><p>Sin este convenio el producto pierde su diferenciador más poderoso. Prioridad absoluta antes del piloto.</p></div>
+      <div class="rcard reveal d1"><div class="rl rl-high">Alto</div><h4>Tasa de activación &gt;7%</h4><p>La cobertura escalonada (80%/50%) reduce la exposición máxima en ~15%. Comité de riesgos trimestral.</p></div>
+      <div class="rcard reveal d2"><div class="rl rl-med">Medio</div><h4>GMF del 4×1000</h4><p>$240 por prima de $60K y $4.800 por siniestro de $1.2M. Incorporado al modelo de costos.</p></div>
+      <div class="rcard reveal d3"><div class="rl rl-med">Medio</div><h4>Incertidumbre regulatoria</h4><p>Decretos en curso en 2026 pueden modificar condiciones del sandbox o reglas de DataCrédito.</p></div>
+      <div class="rcard reveal d4"><div class="rl rl-med">Medio</div><h4>Riesgo cibernético (Bre-B)</h4><p>Masificación de Bre-B amplía superficie de ataque. Incidente en pago crítico puede destruir confianza.</p></div>
+      <div class="rcard reveal"><div class="rl rl-low">Bajo</div><h4>Riesgo de corrida</h4><p>Las primas son irrevocables. No hay riesgo de corrida bancaria como en depósitos. Fondo estable.</p></div>
     </div>
   </div>
 </section>
@@ -445,7 +496,7 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
     <div class="reveal">
       <div class="eyebrow">Equipo fundador</div>
       <h2 class="sec-title">Las personas detrás de RentHedge</h2>
-      <p class="sec-body">Estudiantes de Finanzas y Economía de la Universidad del Rosario, Bogotá. Combinamos conocimiento en finanzas cuantitativas, regulación y tecnología financiera.</p>
+      <p class="sec-body">Estudiantes de Finanzas y Economía de la Universidad del Rosario, Bogotá.</p>
     </div>
     <div class="team-grid">
       <div class="tcard reveal">
@@ -490,21 +541,72 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
 <div class="divider"></div>
 
 <!-- CTA -->
-<section class="cta" id="contacto">
+<section class="cta" id="contacto-cta">
   <div class="reveal">
     <div class="eyebrow" style="text-align:center">Próximos pasos</div>
     <h2>¿Listo para proteger<br>a 4 millones de inquilinos?</h2>
-    <p>RentHedge tiene el producto, la infraestructura y la matemática. El sandbox de la SFC es la puerta de entrada. El convenio con DataCrédito es la prioridad.</p>
+    <p>RentHedge tiene el producto, la infraestructura y la matemática. El sandbox de la SFC es la puerta de entrada.</p>
     <div style="display:flex;flex-wrap:wrap;gap:.9rem;justify-content:center">
-      <a href="https://linkedin.com/company/renthedge" target="_blank" class="btn-p">Conectar en LinkedIn →</a>
+      <a href="#contacto" class="btn-p">Dejar mis datos →</a>
       <a href="#modelo" class="btn-g">Revisar el modelo</a>
     </div>
   </div>
   <div class="cta-cards">
-    <div class="cc reveal"><div class="cc-icon"></div><h4>Sandbox SFC</h4><p>Decreto 1234/2020 · Circular 016/2021 · Certificado temporal de operación</p></div>
-    <div class="cc reveal d1"><div class="cc-icon"></div><h4>Inversionistas ángel</h4><p>Capital mínimo $80–100M COP · SAS · Sin captación pública · Sin deuda externa</p></div>
-    <div class="cc reveal d2"><div class="cc-icon"></div><h4>Convenio DataCrédito</h4><p>Prioridad absoluta · Diferenciador irreemplazable · Inclusión financiera real</p></div>
-    <div class="cc reveal d3"><div class="cc-icon"></div><h4>Alianzas inmobiliarias</h4><p>2–3 inmobiliarias grandes de Bogotá para alcanzar los 200 clientes del piloto</p></div>
+    <div class="cc reveal"><div class="cc-icon"></div><h4>Sandbox SFC</h4><p>Decreto 1234/2020 · Circular 016/2021</p></div>
+    <div class="cc reveal d1"><div class="cc-icon"></div><h4>Inversionistas ángel</h4><p>Capital $80–100M COP · SAS · Sin captación pública</p></div>
+    <div class="cc reveal d2"><div class="cc-icon"></div><h4>Convenio DataCrédito</h4><p>Prioridad absoluta · Inclusión financiera real</p></div>
+    <div class="cc reveal d3"><div class="cc-icon"></div><h4>Alianzas inmobiliarias</h4><p>2–3 inmobiliarias de Bogotá para el piloto</p></div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<!-- CONTACTO -->
+<section class="contact-section" id="contacto">
+  <div class="contact-wrap">
+    <div class="reveal" style="text-align:center">
+      <div class="eyebrow">Contacto</div>
+      <h2 class="sec-title" style="text-align:center">Únete a RentHedge</h2>
+      <p class="sec-body" style="margin:0 auto;text-align:center">Si eres inversionista, aliado inmobiliario, potencial usuario o simplemente quieres saber más, déjanos tus datos y te contactamos.</p>
+    </div>
+    <div class="contact-form reveal">
+      <div id="formSuccess" class="form-success">
+        <h3>¡Mensaje recibido!</h3>
+        <p>Gracias por tu interés en RentHedge. Te contactaremos pronto.</p>
+      </div>
+      <form id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">Nombre</label>
+            <input type="text" id="fname" placeholder="Tu nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="fphone">Celular</label>
+            <input type="tel" id="fphone" placeholder="+57 300 000 0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="femail">Correo electrónico</label>
+          <input type="email" id="femail" placeholder="tu@correo.com" required>
+        </div>
+        <div class="form-group">
+          <label for="frole">Soy...</label>
+          <select id="frole">
+            <option value="">Selecciona una opción</option>
+            <option>Inversionista / ángel</option>
+            <option>Aliado inmobiliario</option>
+            <option>Futuro usuario (inquilino)</option>
+            <option>Periodista / investigador</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="fmsg">Mensaje (opcional)</label>
+          <textarea id="fmsg" placeholder="Cuéntanos más sobre tu interés..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Enviar →</button>
+        <p class="form-note">Tus datos se usan exclusivamente para contactarte sobre RentHedge. No los compartimos con terceros.</p>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -519,11 +621,32 @@ footer{padding:2rem;border-top:1px solid var(--border);display:flex;flex-wrap:wr
 </footer>
 
 <script>
+// SCROLL REVEAL
 const io = new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
 },{threshold:0.1});
 document.querySelectorAll('.reveal,.step').forEach(el=>io.observe(el));
 
+// DROPDOWN
+function toggleDropdown(){
+  document.getElementById('navDropdown').classList.toggle('open');
+}
+document.addEventListener('click',function(e){
+  const dd=document.getElementById('navDropdown');
+  if(!dd.contains(e.target)) dd.classList.remove('open');
+});
+document.querySelectorAll('.dropdown-menu a').forEach(a=>{
+  a.addEventListener('click',()=>document.getElementById('navDropdown').classList.remove('open'));
+});
+
+// FORM
+function handleSubmit(e){
+  e.preventDefault();
+  document.getElementById('contactForm').style.display='none';
+  document.getElementById('formSuccess').style.display='block';
+}
+
+// CHARTS
 Chart.defaults.color='#7a90b8';
 Chart.defaults.font.family="'DM Sans',sans-serif";
 const gc='rgba(122,144,184,0.1)';
@@ -532,7 +655,7 @@ const G='#00c896',GO='#f0c060',R='#ff5a5a',B='#4a90e2';
 new Chart(document.getElementById('c1'),{
   type:'bar',
   data:{
-    labels:['Ingresos\nPrimas','Desembolsos\nBrutos','Recuperación\n(85% repago)','Pérdida\nNeta','Rend.\nPortafolio'],
+    labels:['Ingresos\nPrimas','Desembolsos\nBrutos','Recuperación\n(85%)','Pérdida\nNeta','Rend.\nPortafolio'],
     datasets:[{data:[12e6,-14.28e6,12.14e6,-2.14e6,740e3],backgroundColor:[G,R,G,R,GO],borderRadius:6,borderSkipped:false}]
   },
   options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$'+(c.raw/1e6).toFixed(2)+'M COP'}}},scales:{x:{grid:{color:gc},ticks:{font:{size:9}}},y:{grid:{color:gc},ticks:{callback:v=>'$'+(v/1e6).toFixed(1)+'M',font:{size:9}}}}}
@@ -563,7 +686,7 @@ new Chart(document.getElementById('c3'),{
     labels:meses,
     datasets:[
       {label:'Primas acumuladas',data:acum,borderColor:G,backgroundColor:'rgba(0,200,150,.08)',fill:true,tension:.3,pointRadius:4,borderWidth:2},
-      {label:'Con rendimientos del portafolio (TES + renta fija)',data:withR,borderColor:GO,backgroundColor:'transparent',borderDash:[5,3],tension:.3,pointRadius:3,borderWidth:2}
+      {label:'Con rendimientos (TES + renta fija)',data:withR,borderColor:GO,backgroundColor:'transparent',borderDash:[5,3],tension:.3,pointRadius:3,borderWidth:2}
     ]
   },
   options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:10,font:{size:9},padding:10}},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+(c.raw/1e6).toFixed(1)+'M COP'}}},scales:{x:{grid:{color:gc}},y:{grid:{color:gc},ticks:{callback:v=>'$'+(v/1e6).toFixed(0)+'M'}}}}
